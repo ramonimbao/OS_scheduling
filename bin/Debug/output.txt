@@ -1,0 +1,33 @@
+First Come First Serve
+======================
+=== P0 ===
+Wait time:		0
+Response time:		5
+Turnaround time:	27
+
+=== P1 ===
+Wait time:		22
+Response time:		27
+Turnaround time:	45
+
+=== P2 ===
+Wait time:		40
+Response time:		45
+Turnaround time:	54
+
+=== P3 ===
+Wait time:		49
+Response time:		54
+Turnaround time:	64
+
+=== P4 ===
+Wait time:		59
+Response time:		64
+Turnaround time:	69
+
+Total cycles used:	69
+Ave. wait time:		34
+Ave. response time:	39
+Ave. turnaround time:	51.8
+Throughput:		[redacted]
+CPU utilization:	[redacted]
