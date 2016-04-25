@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include <string>
 
@@ -97,7 +98,7 @@ vector<Process*> processQueue;
 // === OUTPUT DISPLAY
 void displayOutput() {
     for (int i=0; i<NUM_PROCESS; i++) {
-        cout << "=== P" << i << " ===" << endl;
+        cout << "=== " << P[i]->name << " ===" << endl;
         cout << "Wait time:\t\t" << P[i]->timeWait << endl;
         sumWait += P[i]->timeWait;
         cout << "Response time:\t\t" << P[i]->timeResponse << endl;
@@ -128,16 +129,24 @@ void resetCPU() {
     processQueue.clear();
 }
 
+// SORT PROCESSES ASC
+// source: http://www.cplusplus.com/reference/algorithm/sort/
+bool sortAsc(Process* a, Process* b) {
+    return (a->cpuBurst < b->cpuBurst);
+}
+
 // === MAIN LOOP
 
 int main() {
-    P[0] = new Process("P0", 22, 5);
-    P[1] = new Process("P1", 18, 5);
-    P[2] = new Process("P2", 9, 5);
-    P[3] = new Process("P3", 10, 5);
-    P[4] = new Process("P4", 5, 5);
+    P[0] = new Process("P1", 22, 5);
+    P[1] = new Process("P2", 18, 5);
+    P[2] = new Process("P3", 9, 5);
+    P[3] = new Process("P4", 10, 5);
+    P[4] = new Process("P5", 5, 5);
 
     // === FCFS
+    cout << "First Come First Serve" << endl;
+    cout << "======================" << endl;
     resetCPU();
     while (numProcessesDone != NUM_PROCESS) {
         numProcessesDone = 0;
@@ -201,11 +210,77 @@ int main() {
 #endif
     currentCycle++;
     }
-
-    cout << "First Come First Serve" << endl;
-    cout << "======================" << endl;
     displayOutput();
 
+    // === SJF (NP)
+    cout << "Shortest Job First (NP)" << endl;
+    cout << "=======================" << endl;
+    resetCPU();
+    while (numProcessesDone != NUM_PROCESS) {
+        numProcessesDone = 0;
+        for(int i=0; i<NUM_PROCESS; i++) {
+            if (P[i]->state == Process::STATE_NEW) {
+                if (P[i]->timeNew < P[i]->maxNewTime) {
+                    P[i]->Delay();
+#ifdef DEBUG
+                    cout << P[i]->name << " delayed... " << P[i]->maxNewTime-P[i]->timeNew << " cycles left." << endl;
+#endif
+                }
+                else {
+                    P[i]->state = Process::STATE_READY;
+                    processQueue.push_back(P[i]);
+                }
+            }
+
+            if (P[i]->state == Process::STATE_DONE) numProcessesDone++;
+        }
+
+        sort(processQueue.begin(), processQueue.end(), sortAsc);
+
+        for (int i=0; i<processQueue.size(); i++) {
+
+            if (processQueue[i]->state == Process::STATE_READY) {
+                if (currentProcess == nullptr) {
+                    currentProcess = &processQueue[i];
+                    (*(currentProcess))->state = Process::STATE_RUNNING;
+                }
+                else {
+                    if (currentProcess != &processQueue[i]) processQueue[i]->state = Process::STATE_WAITING;
+                }
+            }
+
+            if (processQueue[i]->state == Process::STATE_WAITING) {
+#ifdef DEBUG
+                cout << processQueue[i]->name << " waiting... " << processQueue[i]->timeWait << " cycles passed." << endl;
+#endif
+                if (currentProcess == nullptr) {
+                    currentProcess = &processQueue[i];
+                    (*(currentProcess))->state = Process::STATE_RUNNING;
+                }
+                else {
+                    processQueue[i]->Wait();
+                }
+            }
+
+            if (currentProcess != nullptr) {
+                if (currentProcess == &processQueue[i] && (*(currentProcess))->cpuBurst > 0) {
+                    (*(currentProcess))->Burst();
+#ifdef DEBUG
+                    cout << (*(currentProcess))->name << " running... " << (*(currentProcess))->cpuBurst << " cycles left." << endl;
+#endif
+                }
+                else if (currentProcess == &processQueue[i]  && (*(currentProcess))->cpuBurst == 0) {
+                    (*(currentProcess))->state = Process::STATE_DONE;
+                    currentProcess = nullptr;
+                }
+            }
+        }
+#ifdef DEBUG
+        cout << endl;
+#endif
+    currentCycle++;
+    }
+    displayOutput();
 
     return 0;
 }

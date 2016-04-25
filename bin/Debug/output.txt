@@ -1,26 +1,26 @@
 First Come First Serve
 ======================
-=== P0 ===
+=== P1 ===
 Wait time:		0
 Response time:		5
 Turnaround time:	27
 
-=== P1 ===
+=== P2 ===
 Wait time:		22
 Response time:		27
 Turnaround time:	45
 
-=== P2 ===
+=== P3 ===
 Wait time:		40
 Response time:		45
 Turnaround time:	54
 
-=== P3 ===
+=== P4 ===
 Wait time:		49
 Response time:		54
 Turnaround time:	64
 
-=== P4 ===
+=== P5 ===
 Wait time:		59
 Response time:		64
 Turnaround time:	69
@@ -29,5 +29,38 @@ Total cycles used:	69
 Ave. wait time:		34
 Ave. response time:	39
 Ave. turnaround time:	51.8
+Throughput:		[redacted]
+CPU utilization:	[redacted]
+Shortest Job First (NP)
+=======================
+=== P1 ===
+Wait time:		42
+Response time:		47
+Turnaround time:	69
+
+=== P2 ===
+Wait time:		24
+Response time:		29
+Turnaround time:	47
+
+=== P3 ===
+Wait time:		5
+Response time:		10
+Turnaround time:	19
+
+=== P4 ===
+Wait time:		14
+Response time:		19
+Turnaround time:	29
+
+=== P5 ===
+Wait time:		0
+Response time:		5
+Turnaround time:	10
+
+Total cycles used:	69
+Ave. wait time:		17
+Ave. response time:	22
+Ave. turnaround time:	34.8
 Throughput:		[redacted]
 CPU utilization:	[redacted]
