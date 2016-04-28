@@ -31,6 +31,9 @@ Ave. response time:	39
 Ave. turnaround time:	51.8
 Throughput:		[redacted]
 CPU utilization:	[redacted]
+
+
+
 Shortest Job First (NP)
 =======================
 === P1 ===
