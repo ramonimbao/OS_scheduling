@@ -63,6 +63,8 @@ void Process::Reset() {
     timeTurnaround = 0;
 
     state = STATE_NEW;
+
+    phase = 1;
 }
 
 void Process::Delay() {
@@ -392,21 +394,21 @@ int main() {
 
 
 
-
-    // === "An Optimized Round Robin Scheduling Algorithm for CPU Scheduling"
-    // === Ajit Singh, Priyanka Goyal, Sahil Batra
+    // === Proposed Algorithm
     cout << endl << endl << endl;
     cout << "Proposed Algorithm" << endl;
     cout << "==================" << endl;
     resetCPU();
 
     previousProcess = nullptr;
-    globalTQ = 5; // in the paper, it seems they keep multiplying globalTQ by 2 after every phase.
+
+    globalTQ = 5;
+
     int _count = 0;
+    bool sortOnce = false;
 
-    while (numProcessesDone != NUM_PROCESS) {
+    while (numProcessesDone != NUM_PROCESS - 2) {
         numProcessesDone = 0;
-
         for(int i=0; i<NUM_PROCESS; i++) {
             if (P[i]->state == Process::STATE_NEW) {
                 if (P[i]->timeNew < P[i]->maxNewTime) {
@@ -418,12 +420,19 @@ int main() {
                 else {
                     P[i]->state = Process::STATE_READY;
                     P[i]->TQ = globalTQ;
-                    P[i]->priority = processQueue.size() + 1;
                     processQueue.push_back(P[i]);
                 }
             }
 
             if (P[i]->state == Process::STATE_DONE) numProcessesDone++;
+        }
+
+        if (_count > NUM_PROCESS * globalTQ) {
+            if (!sortOnce) {
+                cout << "Sorting...\n";
+                sort(processQueue.begin(), processQueue.end(), sortCpuAsc);
+                sortOnce = true;
+            }
         }
 
         for (int i=0; i<processQueue.size(); i++) {
@@ -432,7 +441,7 @@ int main() {
                     if (previousProcess == nullptr) {
                         currentProcess = &processQueue[i];
                         (*(currentProcess))->state = Process::STATE_RUNNING;
-                        (*(currentProcess))->TQ = globalTQ;
+                        (*(currentProcess))->TQ = globalTQ * (*(currentProcess))->phase;
                     }
                     else {
                         if (previousProcess != &processQueue[i]) {
@@ -447,17 +456,18 @@ int main() {
             }
 
             if (processQueue[i]->state == Process::STATE_WAITING) {
-//#ifdef DEBUG
-                cout << processQueue[i]->name << " waiting... " << processQueue[i]->timeWait << " cycles passed." << endl;
-//#endif
                 if (currentProcess == nullptr) {
                     currentProcess = &processQueue[i];
                     (*(currentProcess))->state = Process::STATE_RUNNING;
-                    (*(currentProcess))->TQ = globalTQ;
+                    (*(currentProcess))->TQ = globalTQ * (*(currentProcess))->phase;
                 }
                 else {
                     processQueue[i]->Wait();
                 }
+
+//#ifdef DEBUG
+                cout << processQueue[i]->name << " waiting... " << processQueue[i]->timeWait << " cycles passed." << endl;
+//#endif
             }
 
             if (currentProcess != nullptr) {
@@ -470,9 +480,13 @@ int main() {
 //#endif
                     }
                     else {
+                        _count++;
                         (*(currentProcess))->state = Process::STATE_WAITING;
+                        (*(currentProcess))->phase++;
                         currentProcess = nullptr;
                     }
+
+
 
                 }
                 else if (currentProcess == &processQueue[i]  && (*(currentProcess))->cpuBurst == 0) {
@@ -480,12 +494,16 @@ int main() {
                     currentProcess = nullptr;
                 }
             }
+
+
+            if (i == NUM_PROCESS - 1) _count++;
         }
 //#ifdef DEBUG
         cout << endl;
 //#endif
     }
     displayOutput();
+
 
 
     return 0;
