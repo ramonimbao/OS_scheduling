@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1461598922 source:d:\projects\os_scheduling\main.cpp
+1462087599 source:d:\projects\os_scheduling\main.cpp
 	<iostream>
+	<algorithm>
 	<vector>
 	<string>
 
