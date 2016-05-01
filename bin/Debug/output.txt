@@ -25,7 +25,6 @@ Wait time:		59
 Response time:		64
 Turnaround time:	69
 
-Total cycles used:	69
 Ave. wait time:		34
 Ave. response time:	39
 Ave. turnaround time:	51.8
@@ -61,7 +60,6 @@ Wait time:		0
 Response time:		5
 Turnaround time:	10
 
-Total cycles used:	69
 Ave. wait time:		17
 Ave. response time:	22
 Ave. turnaround time:	34.8
@@ -71,6 +69,105 @@ CPU utilization:	[redacted]
 
 
 Round Robin (TQ=3)
+==================
+P1 running... 21 cycles left.
+P1 running... 20 cycles left.
+P1 running... 19 cycles left.
+P2 running... 17 cycles left.
+P2 running... 16 cycles left.
+P2 running... 15 cycles left.
+P3 running... 8 cycles left.
+P3 running... 7 cycles left.
+P3 running... 6 cycles left.
+P4 running... 9 cycles left.
+P4 running... 8 cycles left.
+P4 running... 7 cycles left.
+P5 running... 4 cycles left.
+P5 running... 3 cycles left.
+P5 running... 2 cycles left.
+P1 running... 18 cycles left.
+P1 running... 17 cycles left.
+P1 running... 16 cycles left.
+P2 running... 14 cycles left.
+P2 running... 13 cycles left.
+P2 running... 12 cycles left.
+P3 running... 5 cycles left.
+P3 running... 4 cycles left.
+P3 running... 3 cycles left.
+P4 running... 6 cycles left.
+P4 running... 5 cycles left.
+P4 running... 4 cycles left.
+P5 running... 1 cycles left.
+P5 running... 0 cycles left.
+P1 running... 15 cycles left.
+P1 running... 14 cycles left.
+P1 running... 13 cycles left.
+P2 running... 11 cycles left.
+P2 running... 10 cycles left.
+P2 running... 9 cycles left.
+P3 running... 2 cycles left.
+P3 running... 1 cycles left.
+P3 running... 0 cycles left.
+P4 running... 3 cycles left.
+P4 running... 2 cycles left.
+P4 running... 1 cycles left.
+P1 running... 12 cycles left.
+P1 running... 11 cycles left.
+P1 running... 10 cycles left.
+P2 running... 8 cycles left.
+P2 running... 7 cycles left.
+P2 running... 6 cycles left.
+P4 running... 0 cycles left.
+P1 running... 9 cycles left.
+P1 running... 8 cycles left.
+P1 running... 7 cycles left.
+P2 running... 5 cycles left.
+P2 running... 4 cycles left.
+P2 running... 3 cycles left.
+P1 running... 6 cycles left.
+P1 running... 5 cycles left.
+P1 running... 4 cycles left.
+P2 running... 2 cycles left.
+P2 running... 1 cycles left.
+P2 running... 0 cycles left.
+P1 running... 3 cycles left.
+P1 running... 2 cycles left.
+P1 running... 1 cycles left.
+P1 running... 0 cycles left.
+=== P1 ===
+Wait time:		42
+Response time:		5
+Turnaround time:	69
+
+=== P2 ===
+Wait time:		42
+Response time:		8
+Turnaround time:	65
+
+=== P3 ===
+Wait time:		29
+Response time:		11
+Turnaround time:	43
+
+=== P4 ===
+Wait time:		38
+Response time:		14
+Turnaround time:	53
+
+=== P5 ===
+Wait time:		24
+Response time:		17
+Turnaround time:	34
+
+Ave. wait time:		35
+Ave. response time:	11
+Ave. turnaround time:	52.8
+Throughput:		[redacted]
+CPU utilization:	[redacted]
+
+
+
+Proposed Algorithm
 ==================
 P1 delayed... 4 cycles left.
 P2 delayed... 4 cycles left.
@@ -107,7 +204,6 @@ P2 waiting... 0 cycles passed.
 P3 waiting... 0 cycles passed.
 P4 waiting... 0 cycles passed.
 P5 waiting... 0 cycles passed.
-
 P1 running... 20 cycles left.
 P2 waiting... 1 cycles passed.
 P3 waiting... 1 cycles passed.
@@ -119,319 +215,269 @@ P2 waiting... 2 cycles passed.
 P3 waiting... 2 cycles passed.
 P4 waiting... 2 cycles passed.
 P5 waiting... 2 cycles passed.
-
+P1 running... 18 cycles left.
 P2 waiting... 3 cycles passed.
-P2 running... 17 cycles left.
 P3 waiting... 3 cycles passed.
 P4 waiting... 3 cycles passed.
 P5 waiting... 3 cycles passed.
 
-P1 waiting... 0 cycles passed.
-P2 running... 16 cycles left.
+P1 running... 17 cycles left.
+P2 waiting... 4 cycles passed.
 P3 waiting... 4 cycles passed.
 P4 waiting... 4 cycles passed.
 P5 waiting... 4 cycles passed.
-
-P1 waiting... 1 cycles passed.
-P2 running... 15 cycles left.
+P2 waiting... 5 cycles passed.
+P2 running... 17 cycles left.
 P3 waiting... 5 cycles passed.
 P4 waiting... 5 cycles passed.
 P5 waiting... 5 cycles passed.
 
-P1 waiting... 2 cycles passed.
+P1 waiting... 0 cycles passed.
+P2 running... 16 cycles left.
 P3 waiting... 6 cycles passed.
-P3 running... 8 cycles left.
 P4 waiting... 6 cycles passed.
 P5 waiting... 6 cycles passed.
-
-P1 waiting... 3 cycles passed.
-P2 waiting... 3 cycles passed.
-P3 running... 7 cycles left.
+P1 waiting... 1 cycles passed.
+P2 running... 15 cycles left.
+P3 waiting... 7 cycles passed.
 P4 waiting... 7 cycles passed.
 P5 waiting... 7 cycles passed.
 
-P1 waiting... 4 cycles passed.
-P2 waiting... 4 cycles passed.
-P3 running... 6 cycles left.
+P1 waiting... 2 cycles passed.
+P2 running... 14 cycles left.
+P3 waiting... 8 cycles passed.
 P4 waiting... 8 cycles passed.
 P5 waiting... 8 cycles passed.
+P1 waiting... 3 cycles passed.
+P2 running... 13 cycles left.
+P3 waiting... 9 cycles passed.
+P4 waiting... 9 cycles passed.
+P5 waiting... 9 cycles passed.
 
+P1 waiting... 4 cycles passed.
+P3 waiting... 10 cycles passed.
+P3 running... 8 cycles left.
+P4 waiting... 10 cycles passed.
+P5 waiting... 10 cycles passed.
 P1 waiting... 5 cycles passed.
 P2 waiting... 5 cycles passed.
-P4 waiting... 9 cycles passed.
-P4 running... 9 cycles left.
-P5 waiting... 9 cycles passed.
+P3 running... 7 cycles left.
+P4 waiting... 11 cycles passed.
+P5 waiting... 11 cycles passed.
 
 P1 waiting... 6 cycles passed.
 P2 waiting... 6 cycles passed.
-P3 waiting... 6 cycles passed.
-P4 running... 8 cycles left.
-P5 waiting... 10 cycles passed.
-
+P3 running... 6 cycles left.
+P4 waiting... 12 cycles passed.
+P5 waiting... 12 cycles passed.
 P1 waiting... 7 cycles passed.
 P2 waiting... 7 cycles passed.
-P3 waiting... 7 cycles passed.
-P4 running... 7 cycles left.
-P5 waiting... 11 cycles passed.
+P3 running... 5 cycles left.
+P4 waiting... 13 cycles passed.
+P5 waiting... 13 cycles passed.
 
 P1 waiting... 8 cycles passed.
 P2 waiting... 8 cycles passed.
-P3 waiting... 8 cycles passed.
-P5 waiting... 12 cycles passed.
-P5 running... 4 cycles left.
-
+P3 running... 4 cycles left.
+P4 waiting... 14 cycles passed.
+P5 waiting... 14 cycles passed.
 P1 waiting... 9 cycles passed.
 P2 waiting... 9 cycles passed.
-P3 waiting... 9 cycles passed.
-P4 waiting... 9 cycles passed.
-P5 running... 3 cycles left.
+P4 waiting... 15 cycles passed.
+P4 running... 9 cycles left.
+P5 waiting... 15 cycles passed.
 
 P1 waiting... 10 cycles passed.
 P2 waiting... 10 cycles passed.
 P3 waiting... 10 cycles passed.
-P4 waiting... 10 cycles passed.
-P5 running... 2 cycles left.
-
+P4 running... 8 cycles left.
+P5 waiting... 16 cycles passed.
 P1 waiting... 11 cycles passed.
 P2 waiting... 11 cycles passed.
 P3 waiting... 11 cycles passed.
-P4 waiting... 11 cycles passed.
-
-P1 waiting... 12 cycles passed.
-P1 running... 18 cycles left.
-P2 waiting... 12 cycles passed.
-P3 waiting... 12 cycles passed.
-P4 waiting... 12 cycles passed.
-P5 waiting... 12 cycles passed.
-
-P1 running... 17 cycles left.
-P2 waiting... 13 cycles passed.
-P3 waiting... 13 cycles passed.
-P4 waiting... 13 cycles passed.
-P5 waiting... 13 cycles passed.
-
-P1 running... 16 cycles left.
-P2 waiting... 14 cycles passed.
-P3 waiting... 14 cycles passed.
-P4 waiting... 14 cycles passed.
-P5 waiting... 14 cycles passed.
-
-P2 waiting... 15 cycles passed.
-P2 running... 14 cycles left.
-P3 waiting... 15 cycles passed.
-P4 waiting... 15 cycles passed.
-P5 waiting... 15 cycles passed.
-
-P1 waiting... 12 cycles passed.
-P2 running... 13 cycles left.
-P3 waiting... 16 cycles passed.
-P4 waiting... 16 cycles passed.
-P5 waiting... 16 cycles passed.
-
-P1 waiting... 13 cycles passed.
-P2 running... 12 cycles left.
-P3 waiting... 17 cycles passed.
-P4 waiting... 17 cycles passed.
+P4 running... 7 cycles left.
 P5 waiting... 17 cycles passed.
 
-P1 waiting... 14 cycles passed.
-P3 waiting... 18 cycles passed.
-P3 running... 5 cycles left.
-P4 waiting... 18 cycles passed.
+P1 waiting... 12 cycles passed.
+P2 waiting... 12 cycles passed.
+P3 waiting... 12 cycles passed.
+P4 running... 6 cycles left.
 P5 waiting... 18 cycles passed.
+P1 waiting... 13 cycles passed.
+P2 waiting... 13 cycles passed.
+P3 waiting... 13 cycles passed.
+P4 running... 5 cycles left.
+P5 waiting... 19 cycles passed.
 
+P1 waiting... 14 cycles passed.
+P2 waiting... 14 cycles passed.
+P3 waiting... 14 cycles passed.
+P5 waiting... 20 cycles passed.
+P5 running... 4 cycles left.
 P1 waiting... 15 cycles passed.
 P2 waiting... 15 cycles passed.
-P3 running... 4 cycles left.
-P4 waiting... 19 cycles passed.
-P5 waiting... 19 cycles passed.
+P3 waiting... 15 cycles passed.
+P4 waiting... 15 cycles passed.
+P5 running... 3 cycles left.
 
 P1 waiting... 16 cycles passed.
 P2 waiting... 16 cycles passed.
-P3 running... 3 cycles left.
-P4 waiting... 20 cycles passed.
-P5 waiting... 20 cycles passed.
-
+P3 waiting... 16 cycles passed.
+P4 waiting... 16 cycles passed.
+P5 running... 2 cycles left.
 P1 waiting... 17 cycles passed.
 P2 waiting... 17 cycles passed.
-P4 waiting... 21 cycles passed.
-P4 running... 6 cycles left.
-P5 waiting... 21 cycles passed.
+P3 waiting... 17 cycles passed.
+P4 waiting... 17 cycles passed.
+P5 running... 1 cycles left.
 
 P1 waiting... 18 cycles passed.
 P2 waiting... 18 cycles passed.
 P3 waiting... 18 cycles passed.
-P4 running... 5 cycles left.
-P5 waiting... 22 cycles passed.
-
+P4 waiting... 18 cycles passed.
+P5 running... 0 cycles left.
 P1 waiting... 19 cycles passed.
 P2 waiting... 19 cycles passed.
 P3 waiting... 19 cycles passed.
-P4 running... 4 cycles left.
-P5 waiting... 23 cycles passed.
+P4 waiting... 19 cycles passed.
 
 P1 waiting... 20 cycles passed.
+P1 running... 16 cycles left.
 P2 waiting... 20 cycles passed.
 P3 waiting... 20 cycles passed.
-P5 waiting... 24 cycles passed.
-P5 running... 1 cycles left.
-
-P1 waiting... 21 cycles passed.
+P4 waiting... 20 cycles passed.
+P1 running... 15 cycles left.
 P2 waiting... 21 cycles passed.
 P3 waiting... 21 cycles passed.
 P4 waiting... 21 cycles passed.
-P5 running... 0 cycles left.
 
-P1 waiting... 22 cycles passed.
+P1 running... 14 cycles left.
 P2 waiting... 22 cycles passed.
 P3 waiting... 22 cycles passed.
 P4 waiting... 22 cycles passed.
-
-P1 waiting... 23 cycles passed.
-P1 running... 15 cycles left.
+P1 running... 13 cycles left.
 P2 waiting... 23 cycles passed.
 P3 waiting... 23 cycles passed.
 P4 waiting... 23 cycles passed.
 
-P1 running... 14 cycles left.
+P1 running... 12 cycles left.
 P2 waiting... 24 cycles passed.
 P3 waiting... 24 cycles passed.
 P4 waiting... 24 cycles passed.
-
-P1 running... 13 cycles left.
 P2 waiting... 25 cycles passed.
+P2 running... 12 cycles left.
 P3 waiting... 25 cycles passed.
 P4 waiting... 25 cycles passed.
 
-P2 waiting... 26 cycles passed.
+P1 waiting... 20 cycles passed.
 P2 running... 11 cycles left.
 P3 waiting... 26 cycles passed.
 P4 waiting... 26 cycles passed.
-
-P1 waiting... 23 cycles passed.
+P1 waiting... 21 cycles passed.
 P2 running... 10 cycles left.
 P3 waiting... 27 cycles passed.
 P4 waiting... 27 cycles passed.
 
-P1 waiting... 24 cycles passed.
+P1 waiting... 22 cycles passed.
 P2 running... 9 cycles left.
 P3 waiting... 28 cycles passed.
 P4 waiting... 28 cycles passed.
-
-P1 waiting... 25 cycles passed.
+P1 waiting... 23 cycles passed.
+P2 running... 8 cycles left.
 P3 waiting... 29 cycles passed.
-P3 running... 2 cycles left.
 P4 waiting... 29 cycles passed.
+
+P1 waiting... 24 cycles passed.
+P3 waiting... 30 cycles passed.
+P3 running... 3 cycles left.
+P4 waiting... 30 cycles passed.
+P1 waiting... 25 cycles passed.
+P2 waiting... 25 cycles passed.
+P3 running... 2 cycles left.
+P4 waiting... 31 cycles passed.
 
 P1 waiting... 26 cycles passed.
 P2 waiting... 26 cycles passed.
 P3 running... 1 cycles left.
-P4 waiting... 30 cycles passed.
-
+P4 waiting... 32 cycles passed.
 P1 waiting... 27 cycles passed.
 P2 waiting... 27 cycles passed.
 P3 running... 0 cycles left.
-P4 waiting... 31 cycles passed.
+P4 waiting... 33 cycles passed.
 
 P1 waiting... 28 cycles passed.
 P2 waiting... 28 cycles passed.
-P4 waiting... 32 cycles passed.
-P4 running... 3 cycles left.
-
+P4 waiting... 34 cycles passed.
+P4 running... 4 cycles left.
 P1 waiting... 29 cycles passed.
 P2 waiting... 29 cycles passed.
-P4 running... 2 cycles left.
+P4 running... 3 cycles left.
 
 P1 waiting... 30 cycles passed.
 P2 waiting... 30 cycles passed.
-P4 running... 1 cycles left.
-
+P4 running... 2 cycles left.
 P1 waiting... 31 cycles passed.
 P2 waiting... 31 cycles passed.
+P4 running... 1 cycles left.
 
 P1 waiting... 32 cycles passed.
-P1 running... 12 cycles left.
 P2 waiting... 32 cycles passed.
-P4 waiting... 32 cycles passed.
-
-P1 running... 11 cycles left.
-P2 waiting... 33 cycles passed.
-P4 waiting... 33 cycles passed.
-
-P1 running... 10 cycles left.
-P2 waiting... 34 cycles passed.
-P4 waiting... 34 cycles passed.
-
-P2 waiting... 35 cycles passed.
-P2 running... 8 cycles left.
-P4 waiting... 35 cycles passed.
-
-P1 waiting... 32 cycles passed.
-P2 running... 7 cycles left.
-P4 waiting... 36 cycles passed.
-
+P4 running... 0 cycles left.
 P1 waiting... 33 cycles passed.
-P2 running... 6 cycles left.
-P4 waiting... 37 cycles passed.
+P2 waiting... 33 cycles passed.
 
 P1 waiting... 34 cycles passed.
-P4 waiting... 38 cycles passed.
-P4 running... 0 cycles left.
-
-P1 waiting... 35 cycles passed.
+P1 running... 11 cycles left.
+P2 waiting... 34 cycles passed.
+P1 running... 10 cycles left.
 P2 waiting... 35 cycles passed.
 
-P1 waiting... 36 cycles passed.
 P1 running... 9 cycles left.
 P2 waiting... 36 cycles passed.
-
 P1 running... 8 cycles left.
 P2 waiting... 37 cycles passed.
 
 P1 running... 7 cycles left.
 P2 waiting... 38 cycles passed.
-
 P2 waiting... 39 cycles passed.
+P2 running... 7 cycles left.
+
+P1 waiting... 34 cycles passed.
+P2 running... 6 cycles left.
+P1 waiting... 35 cycles passed.
 P2 running... 5 cycles left.
 
 P1 waiting... 36 cycles passed.
 P2 running... 4 cycles left.
-
 P1 waiting... 37 cycles passed.
 P2 running... 3 cycles left.
 
 P1 waiting... 38 cycles passed.
-
 P1 waiting... 39 cycles passed.
 P1 running... 6 cycles left.
 P2 waiting... 39 cycles passed.
 
 P1 running... 5 cycles left.
 P2 waiting... 40 cycles passed.
-
 P1 running... 4 cycles left.
 P2 waiting... 41 cycles passed.
 
+P1 running... 3 cycles left.
 P2 waiting... 42 cycles passed.
-P2 running... 2 cycles left.
+P1 running... 2 cycles left.
+P2 waiting... 43 cycles passed.
 
+P2 waiting... 44 cycles passed.
+P2 running... 2 cycles left.
 P1 waiting... 39 cycles passed.
 P2 running... 1 cycles left.
 
 P1 waiting... 40 cycles passed.
 P2 running... 0 cycles left.
-
 P1 waiting... 41 cycles passed.
 
 P1 waiting... 42 cycles passed.
-P1 running... 3 cycles left.
-
-P1 running... 2 cycles left.
-
 P1 running... 1 cycles left.
-
-
-P1 waiting... 42 cycles passed.
 P1 running... 0 cycles left.
 
 
@@ -442,28 +488,27 @@ Response time:		5
 Turnaround time:	69
 
 === P2 ===
-Wait time:		42
-Response time:		8
-Turnaround time:	65
+Wait time:		44
+Response time:		10
+Turnaround time:	67
 
 === P3 ===
-Wait time:		29
-Response time:		11
-Turnaround time:	43
+Wait time:		30
+Response time:		15
+Turnaround time:	44
 
 === P4 ===
-Wait time:		38
-Response time:		14
-Turnaround time:	53
+Wait time:		34
+Response time:		20
+Turnaround time:	49
 
 === P5 ===
-Wait time:		24
-Response time:		17
-Turnaround time:	34
+Wait time:		20
+Response time:		25
+Turnaround time:	30
 
-Total cycles used:	76
-Ave. wait time:		35
-Ave. response time:	11
-Ave. turnaround time:	52.8
+Ave. wait time:		34
+Ave. response time:	15
+Ave. turnaround time:	51.8
 Throughput:		[redacted]
 CPU utilization:	[redacted]
