@@ -337,7 +337,7 @@ int main() {
 
 
 
-
+    #define DEBUG
 
     // === Round Robin
     cout << endl << endl << endl;
@@ -422,6 +422,12 @@ int main() {
                     currentProcess = nullptr;
                 }
             }
+            else {
+                if(processQueue[i]->state == Process::STATE_READY && previousProcess != &processQueue[i]){
+                    currentProcess = &processQueue[i];
+                    (*(currentProcess))->state = Process::STATE_RUNNING;
+                }
+            }
         }
 #ifdef DEBUG
         cout << endl;
@@ -431,20 +437,25 @@ int main() {
     displayOutput();
 
 
+
+
+
+
+    #undef DEBUG
+#define DEBUG
     // === Proposed Algorithm
     cout << endl << endl << endl;
     cout << "Proposed Algorithm" << endl;
     cout << "==================" << endl;
     resetCPU();
-
+    currentCycle = -3;
     previousProcess = nullptr;
 
     globalTQ = 5;
 
     int _count = 0;
-    bool sortOnce = false;
 
-    while (numProcessesDone != NUM_PROCESS - 2) {
+    while (numProcessesDone != NUM_PROCESS && _count < NUM_PROCESS*globalTQ) {
         numProcessesDone = 0;
         for(int i=0; i<NUM_PROCESS; i++) {
             if (P[i]->state == Process::STATE_NEW) {
@@ -464,23 +475,13 @@ int main() {
             if (P[i]->state == Process::STATE_DONE) numProcessesDone++;
         }
 
-        if (_count > NUM_PROCESS * globalTQ) {
-            if (!sortOnce) {
-#ifdef DEBUG
-                cout << "Sorting...\n";
-#endif
-                sort(processQueue.begin(), processQueue.end(), sortCpuAsc);
-                sortOnce = true;
-            }
-        }
-
         for (int i=0; i<processQueue.size(); i++) {
             if (processQueue[i]->state == Process::STATE_READY) {
                 if (currentProcess == nullptr) {
                     if (previousProcess == nullptr) {
                         currentProcess = &processQueue[i];
                         (*(currentProcess))->state = Process::STATE_RUNNING;
-                        (*(currentProcess))->TQ = globalTQ * (*(currentProcess))->phase;
+                        (*(currentProcess))->TQ = globalTQ;
                     }
                     else {
                         if (previousProcess != &processQueue[i]) {
@@ -495,18 +496,17 @@ int main() {
             }
 
             if (processQueue[i]->state == Process::STATE_WAITING) {
+#ifdef DEBUG
+                cout << processQueue[i]->name << " waiting... " << processQueue[i]->timeWait << " cycles passed." << endl;
+#endif
                 if (currentProcess == nullptr) {
                     currentProcess = &processQueue[i];
                     (*(currentProcess))->state = Process::STATE_RUNNING;
-                    (*(currentProcess))->TQ = globalTQ * (*(currentProcess))->phase;
+                    (*(currentProcess))->TQ = globalTQ;
                 }
                 else {
                     processQueue[i]->Wait();
                 }
-
-#ifdef DEBUG
-                cout << processQueue[i]->name << " waiting... " << processQueue[i]->timeWait << " cycles passed." << endl;
-#endif
             }
 
             if (currentProcess != nullptr) {
@@ -519,14 +519,80 @@ int main() {
 #endif
                     }
                     else {
-                        _count++;
                         (*(currentProcess))->state = Process::STATE_WAITING;
-                        (*(currentProcess))->phase++;
                         currentProcess = nullptr;
                     }
+                }
+                else if (currentProcess == &processQueue[i]  && (*(currentProcess))->cpuBurst == 0) {
+                    (*(currentProcess))->state = Process::STATE_DONE;
+                    currentProcess = nullptr;
+                }
+            }
+            else {
+                if(processQueue[i]->state == Process::STATE_READY && previousProcess != &processQueue[i]){
+                    currentProcess = &processQueue[i];
+                    (*(currentProcess))->state = Process::STATE_RUNNING;
+                }
+            }
+        }
+#ifdef DEBUG
+        cout << endl;
+#endif
+        currentCycle++;
+        _count++;
+    }
 
+    sort(processQueue.begin(), processQueue.end(), sortCpuAsc);
 
+    while (numProcessesDone != NUM_PROCESS) {
+        numProcessesDone = 0;
+        for(int i=0; i<NUM_PROCESS; i++) {
+            if (P[i]->state == Process::STATE_NEW) {
+                if (P[i]->timeNew < P[i]->maxNewTime) {
+                    P[i]->Delay();
+#ifdef DEBUG
+                    cout << P[i]->name << " delayed... " << P[i]->maxNewTime-P[i]->timeNew << " cycles left." << endl;
+#endif
+                }
+                else {
+                    P[i]->state = Process::STATE_READY;
+                    processQueue.push_back(P[i]);
+                }
+            }
 
+            if (P[i]->state == Process::STATE_DONE) numProcessesDone++;
+        }
+
+        for (int i=0; i<processQueue.size(); i++) {
+
+            if (currentProcess != &processQueue[i] && processQueue[i]->state == Process::STATE_READY) {
+                if (currentProcess == nullptr) {
+                    currentProcess = &processQueue[i];
+                    (*(currentProcess))->state = Process::STATE_RUNNING;
+                }
+                else {
+                    if (currentProcess != &processQueue[i]) processQueue[i]->state = Process::STATE_WAITING;
+                }
+            }
+
+            if (currentProcess != &processQueue[i] && processQueue[i]->state == Process::STATE_WAITING) {
+#ifdef DEBUG
+                cout << processQueue[i]->name << " waiting... " << processQueue[i]->timeWait << " cycles passed." << endl;
+#endif
+                if (currentProcess == nullptr) {
+                    currentProcess = &processQueue[i];
+                    (*(currentProcess))->state = Process::STATE_RUNNING;
+                }
+                else {
+                    processQueue[i]->Wait();
+                }
+            }
+            if (currentProcess != nullptr) {
+                if (currentProcess == &processQueue[i] && (*(currentProcess))->cpuBurst > 0) {
+                    (*(currentProcess))->Burst();
+#ifdef DEBUG
+                    cout << (*(currentProcess))->name << " running... " << (*(currentProcess))->cpuBurst << " cycles left." << endl;
+#endif
                 }
                 else if (currentProcess == &processQueue[i]  && (*(currentProcess))->cpuBurst == 0) {
                     (*(currentProcess))->state = Process::STATE_DONE;
@@ -541,15 +607,20 @@ int main() {
             }
 
 
-            if (i == NUM_PROCESS - 1) _count++;
         }
 #ifdef DEBUG
         cout << endl;
 #endif
         currentCycle++;
     }
+
+
+
+
     displayOutput();
 
+
+#undef DEBUG
 
 
     return 0;
