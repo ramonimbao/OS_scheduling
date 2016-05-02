@@ -2,12 +2,16 @@
 #include <algorithm>
 #include <vector>
 #include <string>
+#include <sstream>
+#include <ostream>
 
 using namespace std;
 
 // === PROCESS CLASS
 
 class Process {
+
+
 public:
     Process(string name, int burst, int newTime, int priority);
 
@@ -87,8 +91,8 @@ void Process::Wait() {
 
 // === VARIABLES
 
-const int NUM_PROCESS = 5;
-Process* P[NUM_PROCESS];
+int NUM_PROCESS = 5;
+Process* P[256];
 
 double sumWait = 0;
 double sumResponse = 0;
@@ -102,6 +106,7 @@ vector<Process*> processQueue;
 
 // === OUTPUT DISPLAY
 void displayOutput() {
+
     for (int i=0; i<NUM_PROCESS; i++) {
         cout << "=== " << P[i]->name << " ===" << endl;
         cout << "Wait time:\t\t" << P[i]->timeWait << endl;
@@ -116,7 +121,7 @@ void displayOutput() {
     cout << "Ave. response time:\t" << sumResponse/NUM_PROCESS << endl;
     cout << "Ave. turnaround time:\t" << sumTurnaround/NUM_PROCESS << endl;
     cout << "Throughput:\t\t" << "[redacted]" << endl;
-    cout << "CPU utilization:\t" << "[redacted]" << endl;
+    cout << "CPU utilization:\t" << "100%" << endl;
 }
 
 // === RESET "CPU"
@@ -145,13 +150,32 @@ bool sortPriorityAsc(Process* a, Process* b) {
 // === MAIN LOOP
 
 int main() {
-    // TODO: Ask for user input in this section of code
+    int CPUBurst = 0;
+    string pName;
+    ostringstream convert;
 
-    P[0] = new Process("P1", 22, 5);
-    P[1] = new Process("P2", 18, 5);
-    P[2] = new Process("P3", 9, 5);
-    P[3] = new Process("P4", 10, 5);
-    P[4] = new Process("P5", 5, 5);
+    // TODO: Ask for user input in this section of code
+    cout << "Number of processes: " ;
+    cin >> NUM_PROCESS;
+    cout << endl;
+    for( int i = 0; i < NUM_PROCESS; i++){
+        cout << "CPU Burst for P" ;
+        cout << i;
+        cout << ": ";
+        cin >> CPUBurst;
+
+        convert << i;
+
+        pName = "P" + convert.str();
+
+        convert.str("");
+        convert.clear();
+
+        P[i] = new Process(pName, CPUBurst, 0);
+
+
+
+    }
 
     // === FCFS
     cout << "First Come First Serve" << endl;
@@ -369,15 +393,14 @@ int main() {
                     if ((*(currentProcess))->TQ > 0) {
                         (*(currentProcess))->Burst();
                         (*(currentProcess))->TQ--;
+#ifdef DEBUG
                         cout << (*(currentProcess))->name << " running... " << (*(currentProcess))->cpuBurst << " cycles left." << endl;
+#endif
                     }
                     else {
                         (*(currentProcess))->state = Process::STATE_WAITING;
                         currentProcess = nullptr;
                     }
-#ifdef DEBUG
-
-#endif
                 }
                 else if (currentProcess == &processQueue[i]  && (*(currentProcess))->cpuBurst == 0) {
                     (*(currentProcess))->state = Process::STATE_DONE;
@@ -413,9 +436,9 @@ int main() {
             if (P[i]->state == Process::STATE_NEW) {
                 if (P[i]->timeNew < P[i]->maxNewTime) {
                     P[i]->Delay();
-//#ifdef DEBUG
+#ifdef DEBUG
                     cout << P[i]->name << " delayed... " << P[i]->maxNewTime-P[i]->timeNew << " cycles left." << endl;
-//#endif
+#endif
                 }
                 else {
                     P[i]->state = Process::STATE_READY;
@@ -429,7 +452,9 @@ int main() {
 
         if (_count > NUM_PROCESS * globalTQ) {
             if (!sortOnce) {
+#ifdef DEBUG
                 cout << "Sorting...\n";
+#endif DEBUG
                 sort(processQueue.begin(), processQueue.end(), sortCpuAsc);
                 sortOnce = true;
             }
@@ -465,9 +490,9 @@ int main() {
                     processQueue[i]->Wait();
                 }
 
-//#ifdef DEBUG
+#ifdef DEBUG
                 cout << processQueue[i]->name << " waiting... " << processQueue[i]->timeWait << " cycles passed." << endl;
-//#endif
+#endif
             }
 
             if (currentProcess != nullptr) {
@@ -475,9 +500,9 @@ int main() {
                     if ((*(currentProcess))->TQ > 0) {
                         (*(currentProcess))->Burst();
                         (*(currentProcess))->TQ--;
-//#ifdef DEBUG
+#ifdef DEBUG
                         cout << (*(currentProcess))->name << " running... " << (*(currentProcess))->cpuBurst << " cycles left." << endl;
-//#endif
+#endif
                     }
                     else {
                         _count++;
@@ -498,9 +523,9 @@ int main() {
 
             if (i == NUM_PROCESS - 1) _count++;
         }
-//#ifdef DEBUG
+#ifdef DEBUG
         cout << endl;
-//#endif
+#endif
     }
     displayOutput();
 
