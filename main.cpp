@@ -103,6 +103,7 @@ Process** currentProcess = nullptr;
 int numProcessesDone = 0;
 
 vector<Process*> processQueue;
+int currentCycle = 0;
 
 // === OUTPUT DISPLAY
 void displayOutput() {
@@ -117,6 +118,7 @@ void displayOutput() {
         sumTurnaround += P[i]->timeTurnaround;
     }
 
+    cout << "Total cycles used:\t" << currentCycle << endl;
     cout << "Ave. wait time:\t\t" << sumWait/NUM_PROCESS << endl;
     cout << "Ave. response time:\t" << sumResponse/NUM_PROCESS << endl;
     cout << "Ave. turnaround time:\t" << sumTurnaround/NUM_PROCESS << endl;
@@ -135,6 +137,7 @@ void resetCPU() {
     currentProcess = nullptr;
     numProcessesDone = 0;
     processQueue.clear();
+    currentCycle = 0;
 }
 
 // SORT PROCESSES ASC
@@ -154,7 +157,6 @@ int main() {
     string pName;
     ostringstream convert;
 
-    // TODO: Ask for user input in this section of code
     cout << "Number of processes: " ;
     cin >> NUM_PROCESS;
     cout << endl;
@@ -172,9 +174,6 @@ int main() {
         convert.clear();
 
         P[i] = new Process(pName, CPUBurst, 0);
-
-
-
     }
 
     // === FCFS
@@ -241,6 +240,7 @@ int main() {
 #ifdef DEBUG
         cout << endl;
 #endif
+        currentCycle++;
     }
     displayOutput();
 
@@ -316,6 +316,7 @@ int main() {
 #ifdef DEBUG
         cout << endl;
 #endif
+    currentCycle++;
     }
     displayOutput();
 
@@ -326,7 +327,7 @@ int main() {
 
     // === Round Robin
     cout << endl << endl << endl;
-    cout << "Round Robin (TQ=3)" << endl;
+    cout << "Round Robin (TQ=5)" << endl;
     cout << "==================" << endl;
     resetCPU();
 
@@ -411,6 +412,7 @@ int main() {
 #ifdef DEBUG
         cout << endl;
 #endif
+        currentCycle++;
     }
     displayOutput();
 
@@ -454,7 +456,7 @@ int main() {
             if (!sortOnce) {
 #ifdef DEBUG
                 cout << "Sorting...\n";
-#endif DEBUG
+#endif
                 sort(processQueue.begin(), processQueue.end(), sortCpuAsc);
                 sortOnce = true;
             }
@@ -526,6 +528,7 @@ int main() {
 #ifdef DEBUG
         cout << endl;
 #endif
+        currentCycle++;
     }
     displayOutput();
 
