@@ -180,6 +180,7 @@ int main() {
     cout << "First Come First Serve" << endl;
     cout << "======================" << endl;
     resetCPU();
+    currentCycle = -2;
     while (numProcessesDone != NUM_PROCESS) {
         numProcessesDone = 0;
         for(int i=0; i<NUM_PROCESS; i++) {
@@ -201,7 +202,7 @@ int main() {
 
         for (int i=0; i<processQueue.size(); i++) {
 
-            if (processQueue[i]->state == Process::STATE_READY) {
+            if (currentProcess != &processQueue[i] && processQueue[i]->state == Process::STATE_READY) {
                 if (currentProcess == nullptr) {
                     currentProcess = &processQueue[i];
                     (*(currentProcess))->state = Process::STATE_RUNNING;
@@ -211,7 +212,7 @@ int main() {
                 }
             }
 
-            if (processQueue[i]->state == Process::STATE_WAITING) {
+            if (currentProcess != &processQueue[i] && processQueue[i]->state == Process::STATE_WAITING) {
 #ifdef DEBUG
                 cout << processQueue[i]->name << " waiting... " << processQueue[i]->timeWait << " cycles passed." << endl;
 #endif
@@ -223,7 +224,6 @@ int main() {
                     processQueue[i]->Wait();
                 }
             }
-
             if (currentProcess != nullptr) {
                 if (currentProcess == &processQueue[i] && (*(currentProcess))->cpuBurst > 0) {
                     (*(currentProcess))->Burst();
@@ -236,6 +236,14 @@ int main() {
                     currentProcess = nullptr;
                 }
             }
+            else {
+                if (processQueue[i]->state == Process::STATE_READY) {
+                    currentProcess = &processQueue[i];
+                    (*(currentProcess))->state = Process::STATE_RUNNING;
+                }
+            }
+
+
         }
 #ifdef DEBUG
         cout << endl;
@@ -248,12 +256,12 @@ int main() {
 
 
 
-
     // === SJF (NP)
     cout << endl << endl << endl;
     cout << "Shortest Job First (NP)" << endl;
     cout << "=======================" << endl;
     resetCPU();
+    currentCycle = -2;
     while (numProcessesDone != NUM_PROCESS) {
         numProcessesDone = 0;
         for(int i=0; i<NUM_PROCESS; i++) {
@@ -312,6 +320,12 @@ int main() {
                     currentProcess = nullptr;
                 }
             }
+            else {
+                if (processQueue[i]->state == Process::STATE_READY) {
+                    currentProcess = &processQueue[i];
+                    (*(currentProcess))->state = Process::STATE_RUNNING;
+                }
+            }
         }
 #ifdef DEBUG
         cout << endl;
@@ -330,10 +344,10 @@ int main() {
     cout << "Round Robin (TQ=5)" << endl;
     cout << "==================" << endl;
     resetCPU();
-
+    currentCycle = -3;
     Process** previousProcess = nullptr;
 
-    int globalTQ = 3;
+    int globalTQ = 5;
 
     while (numProcessesDone != NUM_PROCESS) {
         numProcessesDone = 0;
@@ -415,8 +429,6 @@ int main() {
         currentCycle++;
     }
     displayOutput();
-
-
 
 
     // === Proposed Algorithm
@@ -519,6 +531,12 @@ int main() {
                 else if (currentProcess == &processQueue[i]  && (*(currentProcess))->cpuBurst == 0) {
                     (*(currentProcess))->state = Process::STATE_DONE;
                     currentProcess = nullptr;
+                }
+            }
+            else {
+                if (processQueue[i]->state == Process::STATE_READY) {
+                    currentProcess = &processQueue[i];
+                    (*(currentProcess))->state = Process::STATE_RUNNING;
                 }
             }
 
