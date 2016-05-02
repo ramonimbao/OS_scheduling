@@ -1,9 +1,11 @@
 # depslib dependency file v1.0
-1462107296 source:d:\projects\os_scheduling\main.cpp
+1462193721 source:d:\projects\os_scheduling\main.cpp
 	<iostream>
 	<algorithm>
 	<vector>
 	<string>
+	<sstream>
+	<ostream>
 
 1462179917 source:c:\users\lenovo z40\documents\github\os_scheduling\main.cpp
 	<iostream>
