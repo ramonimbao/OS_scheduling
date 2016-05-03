@@ -61,9 +61,9 @@ def displayOutput(p):
         print("Turnaround time:\t" + str(p[i].turnaroundTime))
         sumTurnaroundTime += p[i].turnaroundTime
 
-    print("\nAve. waiting time:\t" + str(sumWaitingTime/numProcesses))
-    print("Ave. response time:\t" + str(sumResponseTime/numProcesses))
-    print("Ave. turnaround time:\t" + str(sumTurnaroundTime/numProcesses))
+    print("\nAve. waiting time:\t" + str(sumWaitingTime/float(numProcesses)))
+    print("Ave. response time:\t" + str(sumResponseTime/float(numProcesses)))
+    print("Ave. turnaround time:\t" + str(sumTurnaroundTime/float(numProcesses)))
 
 def initProcesses():
     p = [Process("P1", 22, 5),
@@ -261,13 +261,13 @@ def RR(timeQuantum = 5):
     # DEBUG print("Current cycle: " + str(currentCycle))
     displayOutput(p)
 
-# Execute RR with TQ=10
+# Execute RR with TQ=5
 RR(5)
 
 
 
 
-def OptiRR(timeQuantum = 5):
+def OptiRR(timeQuantum = 5, multiplier = 2):
     print("\n/======== Optimized RR (TQ = " + str(timeQuantum) + ") ========/\n")
     p = initProcesses()
     numProcesses = len(p)
@@ -423,11 +423,12 @@ def OptiRR(timeQuantum = 5):
             currentCycle += 1
 
 
-        timeQuantum *= 2
+        timeQuantum *= multiplier
     
     # DEBUG print("Current cycle: " + str(currentCycle))
     displayOutput(p)
 
-# Execute Optimized RR with TQ=5
+# Execute Optimized RR with TQ=5 and multiplier=2
 OptiRR(5)
-    
+# Execute Optimized RR with TQ=5 and multiplier=3
+OptiRR(5,3)
