@@ -279,183 +279,58 @@ def OptiRR(timeQuantum = 5, multiplier = 2):
         p[i].reset()
     numProcessesDone = 0
     q = [] # Ready queue
-    qfcfs = [] # Backup
     r = None # currently running process
     pr = None # previously running process
     currentCycle = 0
 
     while (numProcessesDone != numProcesses):
-        # Restore the backup queue
-        q = qfcfs[:]
-        
-        # PHASE 1: Run it like a normal RR with specified TQ
-        #print("PHASE 1")
-        for cycle in range(timeQuantum * numProcesses):
-            numProcessesDone = 0
-            #print("STATE CHECK " + p[i].name + ": " + str(p[i].state))
-            #q = []
-            for i in range(len(p)):
-                if (p[i].state == Process.STATE_NEW):
-                    if (p[i].arrivalCurrent < p[i].arrivalTime):
-                        # DEBUG print(p[i].name + " delayed... " + str(p[i].arrivalTime - p[i].arrivalCurrent) + " cycles left.")
-                        p[i].delay()
+        numProcessesDone = 0
+        for i in range(numProcesses):
+            if (p[i].state == Process.STATE_NEW):
+                if (p[i].arrivalCurrent < p[i].arrivalTime):
+                    print(p[i].name + " delayed...");
+                    p[i].delay();
+                else:
+                    print(p[i].name + " switched from new to ready...");
+                    p[i].state = Process.STATE_READY;
+                    p[i].processTimeQuantum = timeQuantum;
+            elif (p[i].state == Process.STATE_READY):
+                if (r == None):
+                    r = p[i];
+                    print(p[i].name + " switched from ready to running...");
+                    p[i].state = Process.STATE_RUNNING;
+                    print(p[i].name + " bursting...");
+                    p[i].burst();
+                    p[i].processTimeQuantum -= 1;
+                else:
+                    print(p[i].name + " waiting...");
+                    p[i].wait();
+            elif (p[i].state == Process.STATE_RUNNING):
+                if (p[i].cpuBurstsLeft > 0):
+                    if (p[i].processTimeQuantum > 0):
+                        print(p[i].name + " bursting...");
+                        p[i].burst();
+                        p[i].processTimeQuantum -= 1;
                     else:
-                        p[i].state = Process.STATE_READY
-                        p[i].processTimeQuantum = timeQuantum
-                        q.append(p[i])
-                if (p[i].state == Process.STATE_DONE):
-                    # DEBUG print(p[i].name + " done... numProcessesDone: " + str(numProcessesDone))
-                    numProcessesDone += 1
-
-            #print "TEST"
-            #for i in range(len(q)):    
-            #    print q[i].name
-
-            for i in range(len(q)):
-                if (q[i].state == Process.STATE_READY):
-                    if (r == None):
-                        if (pr == None):
-                            r = q[i]
-                            r.state = Process.STATE_RUNNING
-                            r.processTimeQuantum = timeQuantum
-                        else:
-                            if (pr != q[i]):
-                                if (numProcessesDone < numProcesses):
-                                    pr = r
-                                else:
-                                    pr = None
-                                r = q[i]
-                                r.state = Process.STATE_RUNNING
-                    else:
-                        if (r != q[i]):
-                            q[i].state = Process.STATE_WAITING
-                            
-                if (q[i].state == Process.STATE_WAITING):
-                    if (r == None):
-                        r = q[i]
-                        r.state = Process.STATE_RUNNING
-                        r.processTimeQuantum = timeQuantum
-                    else:
-                        q[i].wait()
-                        # DEBUG print(q[i].name + " waiting... " + str(q[i].waitingTime) + " cycles passed.")
-
-                if (r != None):
-                    #print("R: " + r.name)
-                    if (r == q[i] and r.cpuBurstsLeft > 0):
-                        if (r.processTimeQuantum > 0):
-                            r.burst()
-                            r.processTimeQuantum -= 1
-                            # DEBUG print(r.name + " running... " + str(r.cpuBurstsLeft) + " cycles left.")
-                        else:
-                            r.state = Process.STATE_WAITING
+                        if (p[i].cpuBurstsLeft > 0):
+                            print(p[i].name + " switched from running to ready...");
                             pr = r
                             r = None
-                    elif (r.cpuBurstsLeft == 0):
-                        r.state = Process.STATE_DONE
-                        pr = r
-                        r = None
-
-                
-            currentCycle += 1
-
-        # make a backup of the FCFS queue
-        qfcfs = q[:]
-        # sort the processes with SJF
-        qbackup = q[:]
-        
-        #for i in range(len(q)):
-        #    if q[i].state == Process.STATE_DONE or q[i].cpuBurstsLeft == 0:
-        #        qbackup.remove(q[i])
-
-
-        """
-        print "q"
-        for i in range(len(q)):
-            print q[i].name
-        print "qbackup"
-        for i in range(len(qbackup)):
-            print qbackup[i].name
-        """
-        q = qbackup[:]
-
-        """
-        print "q"
-        for i in range(len(q)):
-            print q[i].name
-        
-        print ("Sorting...")
-        """
-        q.sort(key = lambda x: x.cpuBurstsLeft)
-        """
-        print "q"
-        for i in range(len(q)):
-            print q[i].name
-        """
-        # PHASE 2: RUN IT LIKE SJF
-        #print("PHASE 2")
-        pr = None
-        for cycle in range(numProcesses * (1 + timeQuantum)):
-            numProcessesDone = 0
-            for i in range(numProcesses):
-                if (p[i].state == Process.STATE_DONE):
-                    # DEBUG print(p[i].name + " done... numProcessesDone: " + str(numProcessesDone))
-                    numProcessesDone += 1
-            
-            for i in range(len(q)):
-                if (q[i].state == Process.STATE_READY):
-                    if (r == None):
-                        if (pr == None):
-                            r = q[i]
-                            r.state = Process.STATE_RUNNING
-                            r.processTimeQuantum = timeQuantum
+                            p[i].state = Process.STATE_READY;
                         else:
-                            if (pr != q[i]):
-                                if (numProcessesDone < numProcesses):
-                                    pr = r
-                                    
-                                else:
-                                    r = None
-                                r = q[i]
-                                r.state = Process.STATE_RUNNING
-                                #pr.wait()
-                    else:
-                        if (r != q[i]):
-                            q[i].state = Process.STATE_WAITING
-                            
-                if (q[i].state == Process.STATE_WAITING):
-                    if (r == None):
-                        r = q[i]
-                        r.state = Process.STATE_RUNNING
-                        r.processTimeQuantum = timeQuantum
-                    else:
-                        q[i].wait()
-                        # DEBUG print(q[i].name + " waiting... " + str(q[i].waitingTime) + " cycles passed.")
-
-                if (r != None):
-                    if (r == q[i] and r.cpuBurstsLeft > 0):
-                        if (r.processTimeQuantum > 0):
-                            r.burst()
-                            r.processTimeQuantum -= 1
-                            # DEBUG print(r.name + " running... " + str(r.cpuBurstsLeft) + " cycles left.")
-                        else:
-                            r.state = Process.STATE_WAITING
+                            print(p[i].name + " switched from running to done...");
                             pr = r
                             r = None
-                    elif (r.cpuBurstsLeft == 0):
-                        r.state = Process.STATE_DONE
-                        pr = r
-                        r = None
+                            p[i].state = Process.STATE_DONE;
+                else:
+                    print(p[i].name + " switched from running to done...");
+                    p[i].state = Process.STATE_DONE;
+                    pr = r;
+                    r = None;
+            elif (p[i].state == Process.STATE_DONE):
+                numProcessesDone += 1;
 
-                
-            currentCycle += 1
-
-
-        timeQuantum *= multiplier
-    
-    # DEBUG print("Current cycle: " + str(currentCycle))
     displayOutput(p)
-
-# Execute Optimized RR with TQ=5 and multiplier=2
-OptiRR(5)
-# Execute Optimized RR with TQ=5 and multiplier=3
-OptiRR(5,3)
+                
+# Execute OptiRR with TQ=5, multiplier=2
+OptiRR(5,2)
