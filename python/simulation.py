@@ -66,11 +66,9 @@ def displayOutput(p):
     print("Ave. turnaround time:\t" + str(sumTurnaroundTime/float(numProcesses)))
 
 def initProcesses():
-    p = [Process("P1", 22, 5),
-         Process("P2", 18, 5),
-         Process("P3", 9, 5),
-         Process("P4", 10, 5),
-         Process("P5", 5, 5)]
+    p = [Process("P1", 30, 5),
+         Process("P2", 15, 5),
+         Process("P3", 20, 5)];
     return p
 
 def FCFS():
@@ -189,7 +187,7 @@ def SJF_NP():
 # Execute SJF_NP
 SJF_NP()
 
-def RR(timeQuantum = 5):
+def RR(timeQuantum = 3):
     print("\n/======== RR (TQ = " + str(timeQuantum) + ") ========/\n")
     p = initProcesses()
     numProcesses = len(p)
@@ -263,7 +261,7 @@ def RR(timeQuantum = 5):
     displayOutput(p)
 
 # Execute RR with TQ=5
-RR(5)
+RR(3)
 
 
 
@@ -456,6 +454,6 @@ def OptiRR(timeQuantum = 5, multiplier = 2):
     displayOutput(p)
 
 # Execute Optimized RR with TQ=5 and multiplier=2
-OptiRR(5)
+OptiRR(3)
 # Execute Optimized RR with TQ=5 and multiplier=3
-OptiRR(5,3)
+OptiRR(3,3)

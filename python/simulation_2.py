@@ -66,11 +66,9 @@ def displayOutput(p):
     print("Ave. turnaround time:\t" + str(sumTurnaroundTime/float(numProcesses)))
 
 def initProcesses():
-    p = [Process("P1", 22, 5),
-         Process("P2", 18, 5),
-         Process("P3", 9, 5),
-         Process("P4", 10, 5),
-         Process("P5", 5, 5)]
+    p = [Process("P1", 12, 5),
+         Process("P2", 5, 5),
+         Process("P3", 10, 5)];
     return p
 
 def FCFS():
